@@ -1,0 +1,25 @@
+services:
+    
+    listener.add.person:
+        class: TestBundle\Form\EventListener\AddUserListener
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    type.person:
+        
+        class: TestBundle\Form\PersonType
+        arguments: [ "@listener.add.person" ]
+        tags:
+            - { name: form.type }
+       
+            
+            
+    
+   
+    
+    
+    
+        
+        
+       

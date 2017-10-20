@@ -1,0 +1,112 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+namespace TestBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * Description of City
+ *
+ * @author ameni
+ */
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="city",uniqueConstraints={@ORM\UniqueConstraint(name="search_idx", columns={"name"})})
+ */
+class City {
+     /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+     /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $name;
+     /**
+     * @ORM\OneToMany(targetEntity="Person", mappedBy="city")
+     */
+    private $persons;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->persons = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return City
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Add person
+     *
+     * @param \TestBundle\Entity\Person $person
+     *
+     * @return City
+     */
+    public function addPerson(\TestBundle\Entity\Person $person)
+    {
+        $this->persons[] = $person;
+
+        return $this;
+    }
+
+    /**
+     * Remove person
+     *
+     * @param \TestBundle\Entity\Person $person
+     */
+    public function removePerson(\TestBundle\Entity\Person $person)
+    {
+        $this->persons->removeElement($person);
+    }
+
+    /**
+     * Get persons
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPersons()
+    {
+        return $this->persons;
+    }
+}

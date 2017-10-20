@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="{{ asset('bundles/test/css/bootstrap-chosen.css') }}" />
+<html>
+    {% include 'TestBundle:Default:header.html.twig' %}
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline form_search">
+                        <div class="form-group">
+                            <label for="tag">Tag:</label>
+                            <input type="text" class="form-control" name="tag">
+                        </div>
+                        <div class="form-group">
+                            <select class="choosenSelect" name="city">
+                                {%for city in cities %}
+                                    <option>{{city}}</option>
+                                {% endfor%}
+                            </select>
+
+                        </div>
+
+                        <button class="btn btn-danger save-button" type="button" >
+                            <span class=" glyphicon glyphicon-search"></span>
+                        </button>
+                    </form> 
+                    <div class="list_persons">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+<script src="{{ asset('bundles/test/js/chosen.jquery.js') }}"></script>
+<script>
+
+
+    $(".choosenSelect").chosen();
+
+    $('.save-button').click(function () {
+        var tag = $("input[name=tag]").val();
+        var city = $("select[name=city]").val();
+        $.ajax
+                ({
+                    url: '{{ (path('list-persons')) }}',
+                    data: {"tags": tag, "city": city},
+                    type: 'post',
+                    success: function (result)
+                    {
+                       
+                        $(".list_persons").html(result);
+                    },
+                    error: function (xhr, status, error) {
+                       console.log(xhr.responseText);
+                    }
+
+                });
+    });
+</script>

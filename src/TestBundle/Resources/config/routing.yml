@@ -1,0 +1,10 @@
+test_homepage:
+    path:     /
+    defaults: { _controller: TestBundle:Default:index }
+test_search:
+    path:     /search
+    defaults: { _controller: TestBundle:Default:search}
+list-persons:
+    path:     /listPersons
+    defaults: { _controller: TestBundle:Default:getPersons}
+    
